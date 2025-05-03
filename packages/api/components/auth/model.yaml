@@ -1,0 +1,63 @@
+
+user:
+  type: object
+  required:
+    - name
+    - tableNumber
+  description: User information.
+  properties:
+    name:
+      type: string
+      example: 'John Doe'
+      description: The name of the user.
+    tableNumber:
+      type: integer
+      example: 5
+      description: The table number assigned to the user.
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the user.
+admin:
+  type: object
+  required:
+    - username
+    - password
+  description: Admin information.
+  properties:
+    username:
+      type: string
+      example: 'Jane Smith'
+      description: The name of the admin.
+    password:
+      type: string
+      example: 'securepassword123'
+      description: The password for the admin account.
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the admin.
+
+token:
+  required:
+    - accessToken
+    - userId
+    - role
+  description: JWT token information.
+  type: object
+  properties:
+    accessToken:
+      type: string
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+      description: The JWT access token.
+    userId:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the user.
+    role:
+      type: string
+      enum: ["USER", "ADMIN"]
+      description: The role of the user (e.g., user, admin).

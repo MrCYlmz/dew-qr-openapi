@@ -1,0 +1,29 @@
+
+order:
+  type: object
+  required:
+    - userId
+    - items
+  description: Order information.
+  properties:
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the order.
+    userId:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the user who placed the order.
+    items:
+      type: array
+      items:
+        type: string
+        format: uuid
+        example: '550e8400-e29b-41d4-a716-446655440000'
+        description: The unique identifiers for the items in the order.
+    status:
+      type: string
+      enum: ["PENDING", "COMPLETED", "CANCELLED"]
+      description: The status of the order (e.g., pending, completed, cancelled).

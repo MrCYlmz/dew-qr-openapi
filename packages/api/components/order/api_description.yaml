@@ -1,0 +1,157 @@
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+userOrderFunctions:
+  post:
+    tags:
+      - User
+    name: placeOrder
+    operationId: placeOrder
+    summary: Place an order
+    description: Place a new order for food or drink items.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./model.yaml#/order"
+    responses:
+      "201":
+        description: Order placed successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/order"
+      "400":
+        description: Bad request. Invalid input data.
+      "500":
+        description: Internal server error.
+  get:
+    tags:
+      - User
+    name: fetchUserOrders
+    operationId: fetchUserOrders
+    summary: Get a list of user orders
+    description: Retrieve a list of all orders placed by the user.
+    responses:
+      "200":
+        description: A list of user orders.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "./model.yaml#/order"
+      "400":
+        description: Bad request. Invalid parameters.
+      "500":
+        description: Internal server error.
+  put:
+    tags:
+      -User
+    name: cancelOrder
+    operationId: cancelOrder
+    summary: Cancel an order
+    description: Cancel an existing order.
+    parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the order to cancel.
+        required: true
+        schema:
+          type: string
+    security: 
+      - BearerAuth: []
+    responses:
+      "200":
+        description: Order canceled successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/order"
+      "400":
+        description: Bad request. Invalid parameters.
+      "404":
+        description: Order not found.
+      "500":
+        description: Internal server error.
+adminOrderFunctions:
+  get:
+    tags:
+      - Admin
+    name: fetchOrders
+    operationId: fetchOrders
+    summary: Get a list of orders
+    description: Retrieve a list of all orders placed by users.
+    responses:
+      "200":
+        description: A list of orders.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "./model.yaml#/order"
+      "400":
+        description: Bad request. Invalid parameters.
+      "500":
+        description: Internal server error.
+  put:
+    tags:
+      - Admin
+    name: closeOrder
+    operationId: closeOrder
+    summary: Close an order
+    description: Mark an order as closed.
+    parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the order to close.
+        required: true
+        schema:
+          type: string
+    security:
+      - BearerAuth: []
+    responses:
+      "200":
+        description: Order closed successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/order"
+      "400":
+        description: Bad request. Invalid parameters.
+      "404":
+        description: Order not found.
+      "500":
+        description: Internal server error.
+  delete:
+    tags:
+      - Admin
+    name: deleteOrder
+    operationId: deleteOrder
+    summary: Delete an order
+    description: Remove an order from the system.
+    parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the order to delete.
+        required: true
+        schema:
+          type: string
+    security:
+      - BearerAuth: []
+    responses:
+      "204":
+        description: Order deleted successfully.
+      "400":
+        description: Bad request. Invalid parameters.
+      "404":
+        description: Order not found.
+      "500":
+        description: Internal server error.
+  
+  

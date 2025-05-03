@@ -1,0 +1,51 @@
+
+userLogin:
+  post:
+    tags:
+      - Auth
+    name: userLogin
+    operationId: loginUser
+    summary: Generate a token for a user
+    description: Generate a JWT token for a user, valid for 2 hours.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./model.yaml#/user"
+    responses:
+      "200":
+        description: Token generated successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/token"
+      "400":
+        description: Bad request. Invalid input data.
+      "500":
+        description: Internal server error.
+adminLogin:
+  post:
+    tags:
+      - Auth
+    name: adminLogin
+    operationId: loginAdmin
+    summary: Generate a token for an admin
+    description: Generate a JWT token for an admin, valid for 2 hours.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./model.yaml#/admin"
+    responses:
+      "200":
+        description: Token generated successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/token"
+      "400":
+        description: Bad request. Invalid input data.
+      "500":
+        description: Internal server error.

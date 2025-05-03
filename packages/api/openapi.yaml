@@ -13,18 +13,18 @@ servers:
   - url: https://api.server.test/v1
 paths:
   /v1/user/items/:
-    $ref: './components/api_description.yaml#/userItemFunctions'
+    $ref: './components/items/api_description.yaml#/userItemFunctions'
   /v1/admin/items/:
-    $ref: './components/api_description.yaml#/adminItemFunctions'
+    $ref: './components/items/api_description.yaml#/adminItemFunctions'
   /v1/user/items/{id}/image/:
-    $ref: './components/api_description.yaml#/userImageFunctions'
+    $ref: './components/items/api_description.yaml#/userImageFunctions'
   /v1/admin/items/{id}/image/:
-    $ref: './components/api_description.yaml#/adminImageFunctions'
+    $ref: './components/items/api_description.yaml#/adminImageFunctions'
   /v1/auth/user/:
-    $ref: './components/api_description.yaml#/userLogin'
+    $ref: './components/auth/api_description.yaml#/userLogin'
   /v1/auth/admin/:
-    $ref: './components/api_description.yaml#/adminLogin'
+    $ref: './components/auth/api_description.yaml#/adminLogin'
   /v1/user/order/:
-    $ref: './components/api_description.yaml#/userOrderFunctions'
+    $ref: './components/order/api_description.yaml#/userOrderFunctions'
   /v1/admin/order/:
-    $ref: './components/api_description.yaml#/adminOrderFunctions'
+    $ref: './components/order/api_description.yaml#/adminOrderFunctions'

@@ -1,0 +1,39 @@
+items:
+  type: array
+  items:
+    $ref: '#/item'
+
+item:
+  type: object
+  required:
+    - id
+    - name
+    - category
+    - available
+  properties:
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the item.
+    name:
+      type: string
+      example: 'Cappuccino'
+      description: The name of the food or drink item.
+    description:
+      type: string
+      example: 'A rich and creamy coffee drink.'
+      description: A brief description of the item.
+    price:
+      type: number
+      format: double
+      example: 3.99
+      description: The price of the item.
+    category:
+      type: string
+      enum: ["BEVERAGE", "FOOD", "DESSERT"]
+      description: The category of the item (e.g., food, drink).
+    available:
+      type: boolean
+      example: true
+      description: Indicates whether the item is currently available.
