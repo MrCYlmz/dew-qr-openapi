@@ -1,0 +1,21 @@
+{
+  "name": "@mrdew/dewqr-api-generator",
+  "version": "1.0.0",
+  "description": "OpenApi definition and code generators",
+  "scripts": {
+    "clean": "rimraf ./packages/typescript/src/gen && rimraf ./packages/typescript/dist",
+    "generate": "openapi-generator-cli generate",
+    "build": "cd ./packages/typescript && npm i && npm run build",
+    "link": "cd ./packages/typescript && npm link",
+    "everythingFromScratch": "npm run clean && npm run generate && npm run build && npm run link",
+    "lint": "cd ./packages/api/ && vacuum lint -d --no-clip  openapi.yaml"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.19.1",
+    "cpy-cli": "^5.0.0",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "@quobix/vacuum": "^0.16.1"
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "@mrdew/dewqr-api-generator",
+    "version": "1.0.0",
+    "description": "typescript types and requests for using the dewqr api",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "prepublish": "tsc"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "typescript": "^4.9.5"
+    },
+    "peerDependencies": {
+        "@hey-api/client-axios": "^0.1.1"
+    },
+    "type": "module"
+}

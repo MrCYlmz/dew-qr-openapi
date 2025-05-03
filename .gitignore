@@ -1,0 +1,29 @@
+packages/typescript/src/gen
+packages/typescript/dist
+packages/java/*
+!packages/java/templates
+node_modules
+
+# Maven build directory
+/target/
+
+# IntelliJ IDEA specific files
+/.idea/
+/*.iml
+
+# Node.js dependencies
+/node_modules/
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+
+# VSCode
+.vscode/
