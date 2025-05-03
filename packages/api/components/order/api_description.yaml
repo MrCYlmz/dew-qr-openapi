@@ -4,7 +4,9 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-userOrderFunctions:
+
+# change the name
+userOrderFunctions1:
   post:
     tags:
       - User
@@ -29,6 +31,7 @@ userOrderFunctions:
         description: Bad request. Invalid input data.
       "500":
         description: Internal server error.
+userOrderFunctions:
   get:
     tags:
       - User
@@ -80,7 +83,6 @@ userOrderFunctions:
         required: true
         schema:
           type: string
-          format: uuid
           example: '550e8400-e29b-41d4-a716-446655440000'
           description: The unique identifier for the order.
     security: 
@@ -91,7 +93,6 @@ userOrderFunctions:
         application/json:
           schema:
             type: string
-            format: uuid
             example: '550e8400-e29b-41d4-a716-446655440000'
             description: The unique identifier for the order to cancel.
     responses:

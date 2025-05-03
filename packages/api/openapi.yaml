@@ -25,6 +25,8 @@ paths:
   /v1/auth/admin/:
     $ref: './components/auth/api_description.yaml#/adminLogin'
   /v1/user/order/:
+    $ref: './components/order/api_description.yaml#/userOrderFunctions1'
+  /v1/user/order/{userId}/:
     $ref: './components/order/api_description.yaml#/userOrderFunctions'
   /v1/admin/order/:
     $ref: './components/order/api_description.yaml#/adminOrderFunctions'
