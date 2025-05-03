@@ -35,7 +35,24 @@ userOrderFunctions:
     name: fetchUserOrders
     operationId: fetchUserOrders
     summary: Get a list of user orders
-    description: Retrieve a list of all orders placed by the user.
+    description: Retrieve a list of all orders placed by the user, optionally filtered by status.
+    parameters:
+      - name: status
+        in: query
+        description: Filter orders by status (e.g., PENDING, COMPLETED, CANCELLED).
+        required: false
+        schema:
+          type: string
+          enum: ["PENDING", "COMPLETED", "CANCELLED"]
+      - name: userId
+        in: path
+        description: The unique identifier of the order to cancel.
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+          description: The unique identifier for the order.
     responses:
       "200":
         description: A list of user orders.
@@ -51,20 +68,32 @@ userOrderFunctions:
         description: Internal server error.
   put:
     tags:
-      -User
+      - User
     name: cancelOrder
     operationId: cancelOrder
     summary: Cancel an order
     description: Cancel an existing order.
     parameters:
-      - name: id
+      - name: userId
         in: path
-        description: The unique identifier of the order to cancel.
+        description: The unique identifier of the user who placed the order.
         required: true
         schema:
           type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+          description: The unique identifier for the order.
     security: 
       - BearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: string
+            format: uuid
+            example: '550e8400-e29b-41d4-a716-446655440000'
+            description: The unique identifier for the order to cancel.
     responses:
       "200":
         description: Order canceled successfully.
@@ -153,5 +182,5 @@ adminOrderFunctions:
         description: Order not found.
       "500":
         description: Internal server error.
-  
-  
+
+

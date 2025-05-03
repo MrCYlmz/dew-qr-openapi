@@ -10,6 +10,7 @@ item:
     - name
     - category
     - available
+    - price
   properties:
     id:
       type: string

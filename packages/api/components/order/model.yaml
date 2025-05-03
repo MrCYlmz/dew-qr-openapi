@@ -3,7 +3,9 @@ order:
   type: object
   required:
     - userId
-    - items
+    - orderedItems
+    - orderedAt
+    - totalPrice
   description: Order information.
   properties:
     id:
@@ -19,11 +21,46 @@ order:
     items:
       type: array
       items:
-        type: string
-        format: uuid
-        example: '550e8400-e29b-41d4-a716-446655440000'
-        description: The unique identifiers for the items in the order.
+        $ref: '#/orderedItem'
     status:
       type: string
       enum: ["PENDING", "COMPLETED", "CANCELLED"]
+      default: "PENDING"
       description: The status of the order (e.g., pending, completed, cancelled).
+    totalPrice:
+      type: number
+      format: float
+      example: 19.99
+      description: The total price of the order.
+    orderedAt:
+      type: string
+      format: date-time
+      example: '2023-10-01T12:00:00Z'
+      description: The date and time when the order was created.
+
+orderedItem:
+  type: object
+  required:
+    - itemId
+    - quantity
+    - price
+    - name
+  properties:
+    itemId:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the item.
+    quantity:
+      type: integer
+      example: 2
+      description: The quantity of the item ordered.
+    price:
+          type: number
+          format: float
+          example: 19.99
+          description: The price of the item at the time of order.
+    name:
+      type: string
+      example: 'Sample Item'
+      description: The name of the item.
