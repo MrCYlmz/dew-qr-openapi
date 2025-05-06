@@ -25,8 +25,10 @@ paths:
   /v1/auth/admin/:
     $ref: './components/auth/api_description.yaml#/adminLogin'
   /v1/user/order/:
-    $ref: './components/order/api_description.yaml#/userOrderFunctions1'
+    $ref: './components/order/api_description.yaml#/userPlaceOrder'
   /v1/user/order/{userId}/:
-    $ref: './components/order/api_description.yaml#/userOrderFunctions'
+    $ref: './components/order/api_description.yaml#/userFetchOrders'
   /v1/admin/order/:
+    $ref: './components/order/api_description.yaml#/fetchAllOrders'
+  /v1/admin/order/{orderId}/{status}/:
     $ref: './components/order/api_description.yaml#/adminOrderFunctions'

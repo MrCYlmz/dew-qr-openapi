@@ -2,10 +2,11 @@
 order:
   type: object
   required:
-    - userId
+    - customer
     - orderedItems
     - orderedAt
     - totalPrice
+    - items
   description: Order information.
   properties:
     id:
@@ -13,11 +14,8 @@ order:
       format: uuid
       example: '550e8400-e29b-41d4-a716-446655440000'
       description: The unique identifier for the order.
-    userId:
-      type: string
-      format: uuid
-      example: '550e8400-e29b-41d4-a716-446655440000'
-      description: The unique identifier for the user who placed the order.
+    customer:
+      $ref: '../auth/model.yaml#/user'
     items:
       type: array
       items:

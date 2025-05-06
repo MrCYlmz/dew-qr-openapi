@@ -6,7 +6,7 @@ components:
       bearerFormat: JWT
 
 # change the name
-userOrderFunctions1:
+userPlaceOrder:
   post:
     tags:
       - User
@@ -31,7 +31,7 @@ userOrderFunctions1:
         description: Bad request. Invalid input data.
       "500":
         description: Internal server error.
-userOrderFunctions:
+userFetchOrders:
   get:
     tags:
       - User
@@ -69,46 +69,47 @@ userOrderFunctions:
         description: Bad request. Invalid parameters.
       "500":
         description: Internal server error.
-  put:
-    tags:
-      - User
-    name: cancelOrder
-    operationId: cancelOrder
-    summary: Cancel an order
-    description: Cancel an existing order.
-    parameters:
-      - name: userId
-        in: path
-        description: The unique identifier of the user who placed the order.
-        required: true
-        schema:
-          type: string
-          example: '550e8400-e29b-41d4-a716-446655440000'
-          description: The unique identifier for the order.
-    security: 
-      - BearerAuth: []
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: string
-            example: '550e8400-e29b-41d4-a716-446655440000'
-            description: The unique identifier for the order to cancel.
-    responses:
-      "200":
-        description: Order canceled successfully.
-        content:
-          application/json:
-            schema:
-              $ref: "./model.yaml#/order"
-      "400":
-        description: Bad request. Invalid parameters.
-      "404":
-        description: Order not found.
-      "500":
-        description: Internal server error.
-adminOrderFunctions:
+  # This future is not applicable in real life.
+  # put:
+  #   tags:
+  #     - User
+  #   name: cancelOrder
+  #   operationId: cancelOrder
+  #   summary: Cancel an order
+  #   description: Cancel an existing order.
+  #   parameters:
+  #     - name: userId
+  #       in: path
+  #       description: The unique identifier of the user who placed the order.
+  #       required: true
+  #       schema:
+  #         type: string
+  #         example: '550e8400-e29b-41d4-a716-446655440000'
+  #         description: The unique identifier for the order.
+  #   security: 
+  #     - BearerAuth: []
+  #   requestBody:
+  #     required: true
+  #     content:
+  #       application/json:
+  #         schema:
+  #           type: string
+  #           example: '550e8400-e29b-41d4-a716-446655440000'
+  #           description: The unique identifier for the order to cancel.
+  #   responses:
+  #     "200":
+  #       description: Order canceled successfully.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "./model.yaml#/order"
+  #     "400":
+  #       description: Bad request. Invalid parameters.
+  #     "404":
+  #       description: Order not found.
+  #     "500":
+  #       description: Internal server error.
+fetchAllOrders:
   get:
     tags:
       - Admin
@@ -116,6 +117,20 @@ adminOrderFunctions:
     operationId: fetchOrders
     summary: Get a list of orders
     description: Retrieve a list of all orders placed by users.
+    parameters:
+      - name: status
+        in: query
+        description: Filter orders by status (e.g., PENDING, COMPLETED, CANCELLED).
+        required: false
+        schema:
+          type: string
+          enum: ["PENDING", "COMPLETED", "CANCELLED"]
+      - name: tableNumber
+        in: query
+        description: Filter orders by table number.
+        required: false
+        schema:
+          type: integer
     responses:
       "200":
         description: A list of orders.
@@ -129,20 +144,31 @@ adminOrderFunctions:
         description: Bad request. Invalid parameters.
       "500":
         description: Internal server error.
+adminOrderFunctions:
   put:
     tags:
       - Admin
-    name: closeOrder
-    operationId: closeOrder
-    summary: Close an order
-    description: Mark an order as closed.
+    name: changeOrderStatus
+    operationId: changeOrderStatus
+    summary: Change order status
+    description: Update the status of an order.
     parameters:
-      - name: id
+      - name: orderId
         in: path
-        description: The unique identifier of the order to close.
+        description: The unique identifier of the order to update.
         required: true
         schema:
           type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+      - name: status
+        in: path
+        description: The new status of the order (e.g., PENDING, COMPLETED, CANCELLED).
+        required: true
+        schema:
+          type: string
+          enum: ["PENDING", "COMPLETED", "CANCELLED"]
+          example: "COMPLETED"    
     security:
       - BearerAuth: []
     responses:
@@ -168,10 +194,12 @@ adminOrderFunctions:
     parameters:
       - name: id
         in: path
-        description: The unique identifier of the order to delete.
+        description: The unique identifier of the order to update.
         required: true
         schema:
           type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
     security:
       - BearerAuth: []
     responses:
@@ -183,5 +211,4 @@ adminOrderFunctions:
         description: Order not found.
       "500":
         description: Internal server error.
-
 
