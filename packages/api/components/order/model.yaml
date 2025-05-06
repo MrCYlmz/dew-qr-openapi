@@ -21,9 +21,7 @@ order:
       items:
         $ref: '#/orderedItem'
     status:
-      type: string
-      enum: ["PENDING", "COMPLETED", "CANCELLED"]
-      default: "PENDING"
+      $ref: '#/orderStatusEnum'
       description: The status of the order (e.g., pending, completed, cancelled).
     totalPrice:
       type: number
@@ -35,6 +33,11 @@ order:
       format: date-time
       example: '2023-10-01T12:00:00Z'
       description: The date and time when the order was created.
+      
+orderStatusEnum:
+  type: string
+  enum: ["PENDING", "COMPLETED", "CANCELLED"]
+  description: The status of the order (e.g., pending, completed, cancelled).
 
 orderedItem:
   type: object

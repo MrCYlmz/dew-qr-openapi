@@ -30,5 +30,5 @@ paths:
     $ref: './components/order/api_description.yaml#/userFetchOrders'
   /v1/admin/order/:
     $ref: './components/order/api_description.yaml#/fetchAllOrders'
-  /v1/admin/order/{orderId}/{status}/:
+  /v1/admin/order/{orderId}/:
     $ref: './components/order/api_description.yaml#/adminOrderFunctions'
