@@ -31,4 +31,6 @@ paths:
   /v1/admin/order/:
     $ref: './components/order/api_description.yaml#/fetchAllOrders'
   /v1/admin/order/{orderId}/:
-    $ref: './components/order/api_description.yaml#/adminOrderFunctions'
+    $ref: './components/order/api_description.yaml#/deleteOrder'
+  /v1/user/order/{orderId}/{status}/:
+    $ref: './components/order/api_description.yaml#/updateOrder'
