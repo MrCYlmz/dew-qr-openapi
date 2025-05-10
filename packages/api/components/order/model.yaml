@@ -1,5 +1,4 @@
-
-order:
+adminOrder:
   type: object
   required:
     - customer
@@ -7,7 +6,7 @@ order:
     - orderedAt
     - totalPrice
     - items
-  description: Order information.
+  description: Order information for admin use.
   properties:
     id:
       type: string
@@ -33,10 +32,46 @@ order:
       format: date-time
       example: '2023-10-01T12:00:00Z'
       description: The date and time when the order was created.
-      
+
+frontendOrder:
+  type: object
+  required:
+    - customer
+    - orderedItems
+    - orderedAt
+    - totalPrice
+    - items
+  description: Order information for frontend use.
+  properties:
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+      description: The unique identifier for the order.
+    customer:
+      $ref: '#/userIdOnly'
+    items:
+      type: array
+      items:
+        $ref: '#/orderedItem'
+    status:
+      $ref: '#/orderStatusEnum'
+      description: The status of the order (e.g., pending, completed, cancelled).
+    totalPrice:
+      type: number
+      format: float
+      example: 19.99
+      description: The total price of the order.
+    orderedAt:
+      type: string
+      format: date-time
+      example: '2023-10-01T12:00:00Z'
+      description: The date and time when the order was created.
+
 orderStatusEnum:
   type: string
   enum: ["PENDING", "COMPLETED", "CANCELLED"]
+  default: "PENDING"
   description: The status of the order (e.g., pending, completed, cancelled).
 
 orderedItem:
@@ -57,11 +92,39 @@ orderedItem:
       example: 2
       description: The quantity of the item ordered.
     price:
-          type: number
-          format: float
-          example: 19.99
-          description: The price of the item at the time of order.
+      type: number
+      format: float
+      example: 19.99
+      description: The price of the item at the time of order.
     name:
       type: string
       example: 'Sample Item'
       description: The name of the item.
+
+fullCustomer:
+  type: object
+  description: Full customer details (used by admin).
+  properties:
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
+    name:
+      type: string
+      example: 'John Doe'
+    email:
+      type: string
+      format: email
+      example: 'john.doe@example.com'
+    phone:
+      type: string
+      example: '+123456789'
+
+userIdOnly:
+  type: object
+  description: Only userId (used by frontend placeOrder).
+  properties:
+    id:
+      type: string
+      format: uuid
+      example: '550e8400-e29b-41d4-a716-446655440000'
