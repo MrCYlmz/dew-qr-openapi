@@ -31,11 +31,8 @@ jobs:
     - name: Build and publish frontend
       run: |
         npm install
-        npm run clean
-        npm run generate
-        npm run build
+        npm run everythingFromScratch
         npm publish
-      working-directory: packages/typescript
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
