@@ -1,0 +1,49 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Node.js for frontend
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: https://npm.pkg.github.com/
+
+    # Install dependencies and generate frontend code
+    - name: Build and publish frontend
+      run: |
+        npm install
+        npm run clean
+        npm run generate
+        npm run build
+        npm publish
+      working-directory: packages/typescript
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Set up Java for backend
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: temurin
+        server-id: github
+        settings-path: ${{ github.workspace }}
+
+    # Build and deploy backend
+    - name: Build and deploy backend
+      run: mvn deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

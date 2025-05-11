@@ -7,9 +7,12 @@
     "generate": "openapi-generator-cli generate",
     "build": "cd ./packages/typescript && npm i && npm run build",
     "link": "cd ./packages/typescript && npm link",
-    "everythingFromScratch": "npm run clean && npm run generate && npm run build && npm run link",
+    "everythingFromScratch": "npm run clean && npm run generate && npm run build",
     "lint": "cd ./packages/api/ && vacuum lint -d --no-clip  openapi.yaml"
   },
+  "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.19.1",
     "cpy-cli": "^5.0.0",
