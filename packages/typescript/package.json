@@ -1,5 +1,5 @@
 {
-    "name": "@mrdew/dewqr-api-generator",
+    "name": "@MrCYlmz/dewqr-api-generator",
     "version": "1.0.0",
     "description": "typescript types and requests for using the dewqr api",
     "main": "dist/index.js",
