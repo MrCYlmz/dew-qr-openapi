@@ -64,7 +64,7 @@ jobs:
     needs: set-version
     permissions:
       contents: read # Keep read permission for checkout
-      packages: write # *** Add this line ***
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -72,24 +72,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.9"
+          node-version: "18"
           registry-url: https://npm.pkg.github.com/
 
-
-        # Install dependencies and generate frontend code
       - name: Generate Typescript Sources
         run: |
-            npm install
-            npm run generate
+          npm install
+          npm run generate
 
       - name: Publish NPM Artifact
         working-directory: ./packages/typescript
         env:
-            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            npm install --registry=https://registry.npmjs.org typescript
-            npm run prepublish
-            npm version ${{ needs.set-version.outputs.version }} --no-git-tag-version
-            npm publish
+          npm install --registry=https://registry.npmjs.org typescript
+          npm run prepublish
+          npm version ${{ needs.set-version.outputs.version }} --no-git-tag-version
+          npm publish --registry=https://npm.pkg.github.com/
