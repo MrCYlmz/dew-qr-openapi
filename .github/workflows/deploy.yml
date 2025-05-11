@@ -6,47 +6,92 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  set-version:
     runs-on: ubuntu-latest
-
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
     steps:
-    # Checkout the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          tags: true
 
-    # Set up Node.js for frontend
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        registry-url: https://npm.pkg.github.com/
+      - name: Set Version
+        id: set-version
+        run: |
+          pkgVersion=$(npm pkg get version)
+          timestamp=$(date +%s%3N)
+          VERSION="$pkgVersion-$timestamp"
+          echo $VERSION
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    # Ensure src directory exists and is not empty
-    - name: Ensure src directory exists
-      run: |
-        mkdir -p packages/typescript/src
-        echo "// Placeholder file" > packages/typescript/src/index.ts
+  build-and-upload-java:
+    runs-on: ubuntu-latest
+    needs: set-version
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # Install dependencies and generate frontend code
-    - name: Build and publish frontend
-      run: |
-        npm install
-        npm run everythingFromScratch
-        npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: maven
 
-    # Set up Java for backend
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: 17
-        distribution: temurin
-        server-id: github
-        settings-path: ${{ github.workspace }}
+      - name: Set Version
+        run: mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ needs.set-version.outputs.version }}
 
-    # Build and deploy backend
-    - name: Build and deploy backend
-      run: mvn deploy
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Clean and Package
+        run: |
+          mvn clean
+          mvn package -DskipTests
+
+      - name: Publish Maven Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn deploy --batch-mode -Dmaven.test.skip=true -Dversion=${{ needs.set-version.outputs.version }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven_output
+          path: ./target
+
+  build-and-upload-typescript:
+    runs-on: ubuntu-latest
+    needs: set-version
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          registry-url: https://npm.pkg.github.com/
+
+      # Ensure src directory exists and is not empty
+      - name: Ensure src directory exists
+        run: |
+            mkdir -p packages/typescript/src
+            echo "// Placeholder file" > packages/typescript/src/index.ts
+
+        # Install dependencies and generate frontend code
+      - name: Build and publish frontend
+        run: |
+            npm install
+            npm run generate
+
+      - name: Publish NPM Artifact
+        working-directory: ./packages/typescript
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            npm install --registry=https://registry.npmjs.org typescript
+            npm run prepublish
+            npm version ${{ needs.set-version.outputs.version }} --no-git-tag-version
+            npm publish
