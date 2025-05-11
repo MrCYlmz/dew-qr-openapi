@@ -1,6 +1,7 @@
 openapi: '3.0.3'
 info:
-  title: Dictionary API
+  title: DewQr API
+  description: API documentation for DewQr, a food and drink ordering app.
   version: '1.0'
 tags:
   - name: User
