@@ -21,6 +21,12 @@ jobs:
         node-version: 18
         registry-url: https://npm.pkg.github.com/
 
+    # Ensure src directory exists and is not empty
+    - name: Ensure src directory exists
+      run: |
+        mkdir -p packages/typescript/src
+        echo "// Placeholder file" > packages/typescript/src/index.ts
+
     # Install dependencies and generate frontend code
     - name: Build and publish frontend
       run: |
