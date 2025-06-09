@@ -25,6 +25,7 @@ adminOrder:
     totalPrice:
       type: number
       format: double
+      minimum: 0
       example: 19.99
       description: The total price of the order.
     orderedAt:
@@ -60,6 +61,7 @@ frontendOrder:
     totalPrice:
       type: number
       format: double
+      minimum: 0
       example: 19.99
       description: The total price of the order.
     orderedAt:
@@ -89,11 +91,13 @@ orderedItem:
       description: The unique identifier for the item.
     quantity:
       type: integer
+      minimum: 1
       example: 2
       description: The quantity of the item ordered.
     price:
       type: number
       format: float
+      minimum: 0
       example: 19.99
       description: The price of the item at the time of order.
     name:
@@ -101,24 +105,6 @@ orderedItem:
       example: 'Sample Item'
       description: The name of the item.
 
-fullCustomer:
-  type: object
-  description: Full customer details (used by admin).
-  properties:
-    id:
-      type: string
-      format: uuid
-      example: '550e8400-e29b-41d4-a716-446655440000'
-    name:
-      type: string
-      example: 'John Doe'
-    email:
-      type: string
-      format: email
-      example: 'john.doe@example.com'
-    phone:
-      type: string
-      example: '+123456789'
 
 userIdOnly:
   type: object

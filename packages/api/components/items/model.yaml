@@ -20,15 +20,20 @@ item:
     name:
       type: string
       example: 'Cappuccino'
+      pattern: '^[a-zA-Z\s,.-]+$'
+      maxLength: 40
       description: The name of the food or drink item.
     description:
       type: string
+      pattern: '^[a-zA-Z\s,.-]+$'
+      maxLength: 255
       example: 'A rich and creamy coffee drink.'
       description: A brief description of the item.
     price:
       type: number
       format: double
       example: 3.99
+      minimum: 0
       description: The price of the item.
     category:
       type: string

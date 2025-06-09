@@ -8,6 +8,7 @@ user:
   properties:
     name:
       type: string
+      pattern: '^[a-zA-Z ]+$'
       example: 'John Doe'
       description: The name of the user.
     tableNumber:
