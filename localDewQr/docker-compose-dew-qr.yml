@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  dew-qr-api:
+    image:  mrayran/dewqr:api
+    container_name: "dew-qr-api"
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_USER: MrDew
+      DATABASE_PASSWORD: Dew
+      JWT_SECRET_KEY: "1234567890123456789012345678901234567890"
+      ADMIN_USERNAME: "Admin"
+      ADMIN_PASSWORD: "Dew"
+      URL: "http://dew-qr-ui:8081"
+      DATABASE_URL: jdbc:postgresql://db:5432/dew_qr_db
+    depends_on:
+      - db
+  dew-qr-ui:
+    image: mrayran/dewqr:ui
+    container_name: "dew-qr-ui"
+    environment:
+       VITE_DEW_QR_API_URL: "http://localhost:8080"
+    ports:
+      - 8081:8081
+    depends_on:
+      - dew-qr-api
+      - db
+  db:
+    image: postgres:16
+    container_name: dew_qr_postgres_container
+    environment:
+      POSTGRES_PASSWORD: Dew
+      POSTGRES_USER: MrDew
+      POSTGRES_DB: dew_qr_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+    driver: local
