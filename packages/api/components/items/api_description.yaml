@@ -87,13 +87,17 @@ adminItemFunctions:
     operationId: deleteItem
     summary: Delete an item
     description: Remove a food or drink item from the menu.
-    parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the item to delete.
-        required: true
-        schema:
-          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: The unique identifier of the item to be deleted.
     security:
       - BearerAuth: []
     responses:
