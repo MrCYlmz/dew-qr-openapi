@@ -12,6 +12,12 @@ tags:
     description: Authentication and token management.
 servers:
   - url: https://api.server.test/v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 paths:
   /v1/user/items/:
     $ref: './components/items/api_description.yaml#/userItemFunctions'
@@ -35,3 +41,28 @@ paths:
     $ref: './components/order/api_description.yaml#/deleteOrder'
   /v1/user/order/{orderId}/{status}/:
     $ref: './components/order/api_description.yaml#/updateOrder'
+  # Table management
+  /v1/admin/tables/:
+    $ref: './components/table/api_description.yaml#/fetchTables'
+  /v1/admin/tables/create/:
+    $ref: './components/table/api_description.yaml#/createTable'
+  /v1/admin/tables/{id}/:
+    $ref: './components/table/api_description.yaml#/updateTable'
+  /v1/admin/tables/{id}/delete/:
+    $ref: './components/table/api_description.yaml#/deleteTable'
+  # Group management
+  /v1/admin/groups/:
+    $ref: './components/group/api_description.yaml#/fetchGroups'
+  /v1/admin/groups/{id}/:
+    $ref: './components/group/api_description.yaml#/getGroupDetail'
+  /v1/admin/groups/{id}/close/:
+    $ref: './components/group/api_description.yaml#/closeGroup'
+  # User approval
+  /v1/admin/users/pending/:
+    $ref: './components/approval/api_description.yaml#/getPendingUsers'
+  /v1/admin/users/{userId}/approve/:
+    $ref: './components/approval/api_description.yaml#/approveUser'
+  /v1/admin/users/{userId}/reject/:
+    $ref: './components/approval/api_description.yaml#/rejectUser'
+  /v1/auth/user/{userId}/status/:
+    $ref: './components/approval/api_description.yaml#/getUserStatus'

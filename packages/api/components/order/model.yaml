@@ -24,7 +24,7 @@ adminOrder:
       description: The status of the order (e.g., pending, completed, cancelled).
     totalPrice:
       type: number
-      format: double
+      format: float
       minimum: 0
       example: 19.99
       description: The total price of the order.
@@ -60,7 +60,7 @@ frontendOrder:
       description: The status of the order (e.g., pending, completed, cancelled).
     totalPrice:
       type: number
-      format: double
+      format: float
       minimum: 0
       example: 19.99
       description: The total price of the order.

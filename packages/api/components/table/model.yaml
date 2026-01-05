@@ -1,0 +1,59 @@
+
+restaurantTable:
+  type: object
+  required:
+    - id
+    - tableNumber
+    - active
+  description: A restaurant table entity.
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: The unique identifier for the table.
+    tableNumber:
+      type: integer
+      example: 5
+      description: The table number.
+    description:
+      type: string
+      maxLength: 100
+      example: 'Window seat table'
+      description: Optional description for the table.
+    active:
+      type: boolean
+      default: true
+      description: Whether the table is active.
+    hasOpenGroup:
+      type: boolean
+      description: Whether the table has an open customer group.
+
+createTableRequest:
+  type: object
+  required:
+    - tableNumber
+  description: Request to create a new table.
+  properties:
+    tableNumber:
+      type: integer
+      example: 5
+      description: The table number (must be unique).
+    description:
+      type: string
+      maxLength: 100
+      description: Optional description for the table.
+
+updateTableRequest:
+  type: object
+  description: Request to update a table.
+  properties:
+    tableNumber:
+      type: integer
+      description: New table number (must be unique).
+    description:
+      type: string
+      maxLength: 100
+      description: Updated description.
+    active:
+      type: boolean
+      description: Whether the table is active.

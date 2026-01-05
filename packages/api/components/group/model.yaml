@@ -1,0 +1,80 @@
+
+groupStatus:
+  type: string
+  enum: ["OPEN", "CLOSED"]
+  description: The status of a customer group.
+
+customerGroup:
+  type: object
+  required:
+    - id
+    - tableId
+    - tableNumber
+    - status
+    - createdAt
+  description: A customer group at a table.
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: The unique identifier for the group.
+    tableId:
+      type: string
+      format: uuid
+      description: The ID of the table this group is at.
+    tableNumber:
+      type: integer
+      description: The table number for display purposes.
+    status:
+      $ref: "#/groupStatus"
+    createdAt:
+      type: string
+      format: date-time
+      description: When the group was created.
+    closedAt:
+      type: string
+      format: date-time
+      description: When the group was closed (null if still open).
+    userCount:
+      type: integer
+      description: Number of users in the group.
+    orderCount:
+      type: integer
+      description: Number of orders placed by the group.
+
+customerGroupDetail:
+  type: object
+  required:
+    - id
+    - tableId
+    - tableNumber
+    - status
+    - createdAt
+    - users
+    - orders
+  description: Detailed customer group with users and orders.
+  properties:
+    id:
+      type: string
+      format: uuid
+    tableId:
+      type: string
+      format: uuid
+    tableNumber:
+      type: integer
+    status:
+      $ref: "#/groupStatus"
+    createdAt:
+      type: string
+      format: date-time
+    closedAt:
+      type: string
+      format: date-time
+    users:
+      type: array
+      items:
+        $ref: "../auth/model.yaml#/user"
+    orders:
+      type: array
+      items:
+        $ref: "../order/model.yaml#/adminOrder"

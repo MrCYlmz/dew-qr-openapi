@@ -1,0 +1,85 @@
+
+userStatus:
+  type: string
+  enum: ["PENDING", "APPROVED", "REJECTED"]
+  description: The approval status of a user.
+
+pendingUser:
+  type: object
+  required:
+    - id
+    - name
+    - tableId
+    - tableNumber
+    - status
+    - createdAt
+  description: A user awaiting approval.
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: The unique identifier for the user.
+    name:
+      type: string
+      description: The user's name.
+    tableId:
+      type: string
+      format: uuid
+      description: The ID of the table the user is at.
+    tableNumber:
+      type: integer
+      description: The table number for display.
+    status:
+      $ref: "#/userStatus"
+    createdAt:
+      type: string
+      format: date-time
+      description: When the user was created.
+
+userStatusResponse:
+  type: object
+  required:
+    - userId
+    - status
+  description: Response containing user's current status.
+  properties:
+    userId:
+      type: string
+      format: uuid
+      description: The user ID.
+    status:
+      $ref: "#/userStatus"
+    rejectionReason:
+      type: string
+      description: Reason for rejection (only if status is REJECTED).
+    groupId:
+      type: string
+      format: uuid
+      description: The group ID (only if status is APPROVED).
+
+rejectUserRequest:
+  type: object
+  description: Request to reject a user.
+  properties:
+    reason:
+      type: string
+      maxLength: 255
+      description: Optional reason for rejection.
+
+approveUserResponse:
+  type: object
+  required:
+    - userId
+    - status
+    - groupId
+  description: Response after approving a user.
+  properties:
+    userId:
+      type: string
+      format: uuid
+    status:
+      $ref: "#/userStatus"
+    groupId:
+      type: string
+      format: uuid
+      description: The group the user was assigned to.

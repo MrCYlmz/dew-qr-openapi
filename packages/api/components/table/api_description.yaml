@@ -1,0 +1,118 @@
+
+fetchTables:
+  get:
+    tags:
+      - Admin
+    operationId: fetchTables
+    summary: Get all tables
+    description: Fetch all restaurant tables.
+    security:
+      - bearerAuth: []
+    responses:
+      "200":
+        description: List of tables returned successfully.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "./model.yaml#/restaurantTable"
+      "401":
+        description: Unauthorized.
+      "500":
+        description: Internal server error.
+
+createTable:
+  post:
+    tags:
+      - Admin
+    operationId: createTable
+    summary: Create a new table
+    description: Create a new restaurant table.
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./model.yaml#/createTableRequest"
+    responses:
+      "201":
+        description: Table created successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/restaurantTable"
+      "400":
+        description: Bad request. Table number already exists.
+      "401":
+        description: Unauthorized.
+      "500":
+        description: Internal server error.
+
+updateTable:
+  put:
+    tags:
+      - Admin
+    operationId: updateTable
+    summary: Update a table
+    description: Update an existing restaurant table.
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: The table ID.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "./model.yaml#/updateTableRequest"
+    responses:
+      "200":
+        description: Table updated successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "./model.yaml#/restaurantTable"
+      "400":
+        description: Bad request.
+      "401":
+        description: Unauthorized.
+      "404":
+        description: Table not found.
+      "500":
+        description: Internal server error.
+
+deleteTable:
+  delete:
+    tags:
+      - Admin
+    operationId: deleteTable
+    summary: Delete a table
+    description: Soft delete a table (sets active to false).
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: The table ID.
+    responses:
+      "204":
+        description: Table deleted successfully.
+      "401":
+        description: Unauthorized.
+      "404":
+        description: Table not found.
+      "500":
+        description: Internal server error.
