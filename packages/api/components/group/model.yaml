@@ -77,4 +77,4 @@ customerGroupDetail:
     orders:
       type: array
       items:
-        $ref: "../order/model.yaml#/adminOrder"
+        $ref: "../order/model.yaml#/frontendOrder"
