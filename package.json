@@ -16,6 +16,6 @@
     "rimraf": "^6.0.1"
   },
   "dependencies": {
-    "@quobix/vacuum": "^0.16.1"
+    "@quobix/vacuum": "^0.30.0"
   }
 }
