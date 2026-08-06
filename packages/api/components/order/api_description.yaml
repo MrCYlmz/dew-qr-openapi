@@ -19,7 +19,7 @@ userPlaceOrder:
       content:
         application/json:
           schema:
-            $ref: "./model.yaml#/frontendOrder"
+            $ref: "./model.yaml#/placeOrder"
     responses:
       "201":
         description: Order placed successfully.
@@ -120,12 +120,14 @@ fetchAllOrders:
         required: false
         schema:
           $ref: "./model.yaml#/orderStatusEnum"
-      - name: tableNumber
+      - name: groupId
         in: query
         description: Filter orders by table number.
         required: false
         schema:
-          type: integer
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
       - name: numberOfItems
         in: query
         description: Filter orders by number of items.
@@ -141,7 +143,7 @@ fetchAllOrders:
             schema:
               type: array
               items:
-                $ref: "./model.yaml#/adminOrder"
+                $ref: "./model.yaml#/frontendOrder"
       "400":
         description: Bad request. Invalid parameters.
       "500":

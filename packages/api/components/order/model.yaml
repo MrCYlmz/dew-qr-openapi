@@ -1,4 +1,4 @@
-adminOrder:
+frontendOrder:
   type: object
   required:
     - customer
@@ -6,7 +6,9 @@ adminOrder:
     - orderedAt
     - totalPrice
     - items
-  description: Order information for admin use.
+    - tableNumber
+    - userName
+  description: Order information for frontend use.
   properties:
     id:
       type: string
@@ -14,7 +16,7 @@ adminOrder:
       example: '550e8400-e29b-41d4-a716-446655440000'
       description: The unique identifier for the order.
     customer:
-      $ref: '../auth/model.yaml#/user'
+      $ref: '#/userIdOnly'
     items:
       type: array
       items:
@@ -33,8 +35,15 @@ adminOrder:
       format: date-time
       example: '2023-10-01T12:00:00Z'
       description: The date and time when the order was created.
+    tableNumber:
+      type: integer
+      example: 5
+      description: The table number associated with the order.
+    userName:
+      type: string
+      example: 'Max Mustermann'
 
-frontendOrder:
+placeOrder:
   type: object
   required:
     - customer
@@ -73,7 +82,6 @@ frontendOrder:
 orderStatusEnum:
   type: string
   enum: ["PENDING", "COMPLETED", "CANCELLED"]
-  default: "PENDING"
   description: The status of the order (e.g., pending, completed, cancelled).
 
 orderedItem:

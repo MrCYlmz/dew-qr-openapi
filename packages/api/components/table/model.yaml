@@ -27,6 +27,10 @@ restaurantTable:
     hasOpenGroup:
       type: boolean
       description: Whether the table has an open customer group.
+    openGroupId:
+      type: string
+      format: uuid
+      description: The ID of the open customer group at this table, if any.
 
 createTableRequest:
   type: object
