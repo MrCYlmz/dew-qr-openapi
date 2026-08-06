@@ -11,11 +11,13 @@
     "lint": "cd ./packages/api/ && vacuum lint -d --no-clip  openapi.yaml"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.19.1",
+    "@openapitools/openapi-generator-cli": "^2.40.1",
     "cpy-cli": "^5.0.0",
     "rimraf": "^6.0.1"
   },
   "dependencies": {
-    "@quobix/vacuum": "^0.30.0"
+    "@quobix/vacuum": "^0.30.0",
+    "n": "^10.2.0",
+    "stable": "^0.1.8"
   }
 }
